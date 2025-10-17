@@ -1,4 +1,4 @@
-import { UserEntity, UserRole } from 'src/db/entities/db.entities';
+import { UserEntity, UserRole } from 'src/_db/entities/db.entities';
 
 
 export class UserResponseDto {

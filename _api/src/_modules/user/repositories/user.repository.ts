@@ -1,9 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { DbClient } from 'src/db/db.service';
+import { DbClient } from 'src/_db/db.service';
 import { IUserRepository } from '../interfaces/IUserRepository';
 import { CreateUserDto } from '../dtos/CreateUserDto';
 import { UserResponseDto } from '../dtos/UserResponseDto';
 import { UpdateUserDto } from '../dtos/UpdateUserDto';
+import { UserEntity } from 'src/_db/entities/db.entities';
 
 
 @Injectable()
@@ -21,8 +22,8 @@ export class UserRepository implements IUserRepository {
         return user;
     }
 
-    async findByEmail(email: string): Promise<UserResponseDto | null> {
-        const user = await this.DbClient.user.findUnique({ where: { email } }).then(u => u ? new UserResponseDto(u) : null);
+    async findByEmail(email: string): Promise<UserEntity | null> {
+        const user = await this.DbClient.user.findUnique({ where: { email } });
         return user;
     }
 

@@ -6,8 +6,7 @@ import { UserResponseDto } from 'src/_modules/user/dtos/UserResponseDto';
 @Injectable()
 export class AuthGuard implements CanActivate {
 
-    private readonly jwtService: JwtService = new JwtService();
-    // constructor(private readonly jwtService: JwtService) {}
+    constructor(private readonly jwtService: JwtService) {}
 
 
     async canActivate(context: ExecutionContext): Promise<boolean> {

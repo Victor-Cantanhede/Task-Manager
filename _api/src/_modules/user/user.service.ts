@@ -2,17 +2,18 @@ import { ConflictException, ForbiddenException, Inject, Injectable, NotFoundExce
 import bcrypt from 'bcrypt';
 
 import { IUserService } from './interfaces/IUserService';
-import type { IUserRepository } from './interfaces/IUserRepository';
+import { IUSER_REPOSITORY, type IUserRepository } from './interfaces/IUserRepository';
 import { CreateUserDto } from './dtos/CreateUserDto';
 import { UserResponseDto } from './dtos/UserResponseDto';
 import { UpdateUserDto } from './dtos/UpdateUserDto';
+import { UserEntity } from 'src/_db/entities/db.entities';
 
 
 @Injectable()
 export class UserService implements IUserService {
 
     constructor(
-        @Inject('IUserRepository')
+        @Inject(IUSER_REPOSITORY)
         private readonly userRepository: IUserRepository
     ) {}
 
@@ -48,6 +49,17 @@ export class UserService implements IUserService {
 
         if (user.id !== authenticatedUser.id && authenticatedUser.role !== 'MASTER') {
             throw new ForbiddenException("You do not have permission to view this user's data");
+        }
+
+        return user;
+    }
+
+
+    async getByEmail(email: string): Promise<UserEntity> {
+
+        const user = await this.userRepository.findByEmail(email);
+        if (!user) {
+            throw new NotFoundException('User not found');
         }
 
         return user;
