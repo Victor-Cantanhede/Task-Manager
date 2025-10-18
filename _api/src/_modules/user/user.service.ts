@@ -66,7 +66,7 @@ export class UserService implements IUserService {
     }
 
 
-    async getAll(authenticatedUser: UserResponseDto): Promise<Array<UserResponseDto> | null> {
+    async getAll(authenticatedUser: UserResponseDto): Promise<Array<UserResponseDto | null>> {
 
         if (authenticatedUser.role !== 'MASTER') {
             throw new ForbiddenException('You do not have permission to view users data');

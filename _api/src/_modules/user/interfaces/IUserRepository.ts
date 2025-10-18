@@ -12,7 +12,7 @@ export interface IUserRepository {
 
     findByEmail(email: string): Promise<UserEntity | null>;
 
-    findAll(): Promise<Array<UserResponseDto> | null>;
+    findAll(): Promise<Array<UserResponseDto | null>>;
 
     findByIdAndUpdate(id: number, data: UpdateUserDto): Promise<UserResponseDto>;
 }

@@ -27,16 +27,14 @@ export class UserRepository implements IUserRepository {
         return user;
     }
 
-    async findAll(): Promise<Array<UserResponseDto> | null> {
+    async findAll(): Promise<Array<UserResponseDto | null>> {
         const users = await this.DbClient.user.findMany().then(users => 
             users.map(u => new UserResponseDto(u))
         );
-        if (users.length === 0) return null;
-
         return users;
     }
 
-    async findByIdAndUpdate(id: number, data: UpdateUserDto): Promise<UserResponseDto> {
+    async findByIdAndUpdate(id: number, dto: UpdateUserDto): Promise<UserResponseDto> {
         const user = await this.findById(id);
         if (!user) {
             throw new NotFoundException('User not found');
@@ -44,7 +42,7 @@ export class UserRepository implements IUserRepository {
 
         const updatedUser = await this.DbClient.user.update({
             where: { id },
-            data: data
+            data: dto
         })
         .then(u => new UserResponseDto(u));
 

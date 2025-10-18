@@ -12,7 +12,7 @@ export interface IUserService {
 
     getByEmail(email: string): Promise<UserEntity>;
 
-    getAll(authenticatedUser: UserResponseDto): Promise<Array<UserResponseDto> | null>;
+    getAll(authenticatedUser: UserResponseDto): Promise<Array<UserResponseDto | null>>;
     
     updateById(id: number, authenticatedUser: UserResponseDto, dto: UpdateUserDto): Promise<UserResponseDto>;
 }

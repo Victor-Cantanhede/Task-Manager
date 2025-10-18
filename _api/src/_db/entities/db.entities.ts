@@ -1,4 +1,4 @@
-import { $Enums, User } from '@prisma/client';
+import { $Enums, User, Task } from '@prisma/client';
 
 
 export class UserEntity implements User {
@@ -11,5 +11,17 @@ export class UserEntity implements User {
     createdAt: Date;
     updatedAt: Date;
 }
-
 export type UserRole = $Enums.UserRole;
+
+
+export class TaskEntity implements Task {
+    id: number;
+    title: string;
+    description: string;
+    status: $Enums.TaskStatus;
+    createdAt: Date;
+    updatedAt: Date;
+
+    userId: number;
+}
+export type TaskStatus = $Enums.TaskStatus;

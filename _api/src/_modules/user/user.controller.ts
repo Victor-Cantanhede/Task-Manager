@@ -21,9 +21,9 @@ export class UserController {
     }
 
 
-    @Get('get_all')
+    @Get()
     @UseGuards(AuthGuard)
-    async getAll(@AuthenticatedUser() authenticatedUser: UserResponseDto): Promise<Array<UserResponseDto> | null> {
+    async getAll(@AuthenticatedUser() authenticatedUser: UserResponseDto): Promise<Array<UserResponseDto | null>> {
         return this.userService.getAll(authenticatedUser);
     }
 
@@ -41,6 +41,7 @@ export class UserController {
 
 
     @Put(':id')
+    @ApiBody({ type: UpdateUserDto })
     @UseGuards(AuthGuard)
     async updateById(
         @Param('id') id: string,

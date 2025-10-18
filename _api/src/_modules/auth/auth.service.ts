@@ -22,6 +22,10 @@ export class AuthService implements IAuthService {
         const user = await this.userService.getByEmail(email).catch(() => {
             throw new NotFoundException('Invalid or unregistered email');
         });
+
+        if (!user.status) {
+            throw new UnauthorizedException('Inactive user');
+        }
         
         const passwordMatch = await bcrypt.compare(password, user.password);
         if (!passwordMatch) {
