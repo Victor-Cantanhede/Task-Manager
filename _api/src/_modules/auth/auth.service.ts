@@ -43,7 +43,7 @@ export class AuthService implements IAuthService {
         };
 
         const token = await this.jwtService.signAsync(payloadUserToken, {
-            expiresIn: '10m'
+            expiresIn: '1d'
         });
 
         return new LoginResponseDto(payloadUserToken, token);
