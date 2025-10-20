@@ -6,12 +6,17 @@ import { KeyRound, LogIn, Mail } from 'lucide-react';
 import { Button } from '../../../components/Button';
 import { Input } from '../../../components/Input';
 import type { AuthUserDto } from '../dtos/auth.service.dtos';
+import { useModal } from '../../../context/modal/ModalContext';
+import AlertMessage from '../../../components/AlertMessage';
+import { useAuthenticatedUser } from '../../../hooks/useAuthUser';
 
 
 
 export default function AuthForm() {
 
     const navigate = useNavigate();
+    const { openModal, closeModal } = useModal();
+    const { saveUser } = useAuthenticatedUser();
 
     const { register, handleSubmit, formState: { errors } } = useForm<AuthUserDto>();
     const [loading, setLoading] = useState(false);
@@ -21,9 +26,13 @@ export default function AuthForm() {
         const login = await authService.login(dto);
 
         if (login.success) {
+            saveUser(login.data.user);
             navigate('/task');
+
         } else {
-            window.alert(login.error.message);
+            openModal(
+                <AlertMessage type='error' message={login.error.message} action={closeModal} />
+            );
         }
 
         setLoading(false);

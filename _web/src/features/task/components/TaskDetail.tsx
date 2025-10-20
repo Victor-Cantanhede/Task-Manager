@@ -5,6 +5,8 @@ import { FileText, FolderPen, Pencil, Save, Undo2, X } from 'lucide-react';
 import { Button } from '../../../components/Button';
 import type { MasterTaskResponseDto, TaskResponseDto, UpdateTaskDto } from '../dtos/task.service.dtos';
 import { Input } from '../../../components/Input';
+import { useModal } from '../../../context/modal/ModalContext';
+import AlertMessage from '../../../components/AlertMessage';
 
 
 
@@ -14,6 +16,8 @@ interface ITaskDetail {
 }
 
 export default function TaskDetail({ task, closeModal }: ITaskDetail) {
+
+    const { openModal } = useModal();
 
     const [updateTask, setUpdateTask] = useState(false);
 
@@ -33,11 +37,14 @@ export default function TaskDetail({ task, closeModal }: ITaskDetail) {
         const updatedTask = await taskService.updateById(task.id, dto);
         
         if (updatedTask.success) {
-            window.alert('Success!');
-            window.location.reload();
+            openModal(
+                <AlertMessage type='success' message='Task updated successfully' action={closeModal} />
+            );
             
         } else {
-            window.alert(updatedTask.error.message);
+            openModal(
+                <AlertMessage type='error' message={updatedTask.error.message} action={() => window.location.reload()} />
+            );
         }
 
         setLoading(false);

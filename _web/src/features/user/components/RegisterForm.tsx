@@ -1,29 +1,37 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import { Check, KeyRound, Mail, User } from 'lucide-react';
 import { Button } from '../../../components/Button';
 import { Input } from '../../../components/Input';
 import type { CreateUserDto } from '../dtos/user.service.dtos';
 import { userService } from '../services/user.service';
+import { useModal } from '../../../context/modal/ModalContext';
+import AlertMessage from '../../../components/AlertMessage';
 
 
 
-export default function RegisterForm() {
-
-    const navigate = useNavigate();
+export default function RegisterForm({ onSuccess }: { onSuccess: () => void }) {
 
     const { register, handleSubmit, formState: { errors } } = useForm<CreateUserDto>();
+
+    const { openModal, closeModal } = useModal();
+
     const [loading, setLoading] = useState(false);
+
 
     const onSubmit = async (dto: CreateUserDto) => {
         setLoading(true);
         const createUserResponse = await userService.create(dto);
 
         if (createUserResponse.success) {
-            window.alert('Success!');
+            openModal(
+                <AlertMessage type='success' message='User registration completed successfully' action={() => { onSuccess(); closeModal() }} />
+            );
+
         } else {
-            window.alert(createUserResponse.error.message);
+            openModal(
+                <AlertMessage type='error' message={createUserResponse.error.message} action={closeModal} />
+            );
         }
 
         setLoading(false);

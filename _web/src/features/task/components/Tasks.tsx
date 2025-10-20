@@ -7,6 +7,7 @@ import { Checkbox } from '../../../components/CheckBox';
 import type { MasterTaskResponseDto, TaskResponseDto, TaskStatus } from '../dtos/task.service.dtos';
 import { useModal } from '../../../context/modal/ModalContext';
 import TaskDetail from './TaskDetail';
+import AlertMessage from '../../../components/AlertMessage';
 
 
 export default function Tasks() {
@@ -35,7 +36,9 @@ export default function Tasks() {
             setFilteredTasks(response.data);
             
         } else {
-            window.alert(response.error.message);
+            openModal(
+                <AlertMessage type='error' message={response.error.message} action={closeModal} />
+            );
         }
         
         setLoading(false);
@@ -46,7 +49,7 @@ export default function Tasks() {
         const task = tasks?.find(t => t && t.id === id);
         if (!task) return;
 
-        openModal(<TaskDetail task={task} closeModal={closeModal} />);
+        openModal(<TaskDetail task={task} closeModal={() => { closeModal(); getTasks() }} />);
     };
 
 
@@ -64,10 +67,11 @@ export default function Tasks() {
                 setTasks(updatedTasks);
                 setFilteredTasks(updatedTasks);
             }
-            window.alert('Success!');
 
         } else {
-            window.alert(response.error.message);
+            openModal(
+                <AlertMessage type='error' message={response.error.message} action={closeModal} />
+            );
         }
 
         setLoading(false);
@@ -81,10 +85,15 @@ export default function Tasks() {
         if (response.success) {
             setTasks(tasks => tasks && tasks.filter(t => t && t.id !== id));
             setFilteredTasks(tasks => tasks && tasks.filter(t => t && t.id !== id));
-            window.alert('Success!');
+            
+            openModal(
+                <AlertMessage type='success' message='Task deleted successfully' action={closeModal} />
+            );
 
         } else {
-            window.alert(response.error.message);
+            openModal(
+                <AlertMessage type='error' message={response.error.message} action={closeModal} />
+            );
         }
 
         setLoading(false);

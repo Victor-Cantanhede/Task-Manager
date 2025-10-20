@@ -30,7 +30,7 @@ export default function LoginPage() {
                 { !hasAccount &&
                     <>
                         <p className='text-center font-black-01'>Sign-up</p>
-                        <RegisterForm />
+                        <RegisterForm onSuccess={() => setHasAccount(true)} />
 
                         <a className='text-[0.9rem] text-[#202020] cursor-pointer hover:text-blue-400' onClick={() => setHasAccount(true)}>Already have an account? Login here</a>
                     </>

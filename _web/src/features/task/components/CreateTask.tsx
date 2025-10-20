@@ -5,11 +5,14 @@ import { FileText, FolderPen, Save } from 'lucide-react';
 import { Input } from '../../../components/Input';
 import { Button } from '../../../components/Button';
 import type { CreateTaskDto } from '../dtos/task.service.dtos';
+import { useModal } from '../../../context/modal/ModalContext';
+import AlertMessage from '../../../components/AlertMessage';
 
 
 
 export default function CreateTask() {
 
+    const { openModal, closeModal } = useModal();
     const { register, handleSubmit, reset, formState: { errors } } = useForm<CreateTaskDto>();
     const [loading, setLoading] = useState(false);
 
@@ -19,11 +22,15 @@ export default function CreateTask() {
         const createdTask = await taskService.create(dto);
 
         if (createdTask.success) {
-            window.alert('Success!');
+            openModal(
+                <AlertMessage type='success' message='Task created successfully' action={closeModal} />
+            );
             reset();
 
         } else {
-            window.alert(createdTask.error.message);
+            openModal(
+                <AlertMessage type='error' message={createdTask.error.message} action={closeModal} />
+            );
         }
 
         setLoading(false);

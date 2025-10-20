@@ -3,6 +3,8 @@ import { ChevronLeft, CircleUser, FilePlus2, LogOut, Search } from 'lucide-react
 import { Button } from '../components/Button';
 import CreateTask from '../features/task/components/CreateTask';
 import Tasks from '../features/task/components/Tasks';
+import { useAuthenticatedUser } from '../hooks/useAuthUser';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -19,6 +21,10 @@ interface MenuOption {
 
 export default function TaskPage() {
 
+    const navigate = useNavigate();
+    
+    const { user, clearUser, isAuthenticated } = useAuthenticatedUser();
+
     const [activeMenu, setActiveMenu] = useState<MenuOption>();
 
     const [menu, setMenu] = useState<Array<MenuOption>>([
@@ -34,6 +40,7 @@ export default function TaskPage() {
         }
     ]);
 
+
     const selectMenuOption = (index: number) => {
 
         setMenu(menu => menu.map((option, i) => i === index
@@ -42,9 +49,16 @@ export default function TaskPage() {
         ));
     };
     
+
     useEffect(() => {
         setActiveMenu(menu.find(option => option.active));
     }, [menu]);
+
+    useEffect(() => {
+        if (!isAuthenticated) {
+            navigate('/login');
+        }
+    }, []);
 
 
     return (
@@ -53,12 +67,13 @@ export default function TaskPage() {
             <header className='p-3 flex justify-between items-center rounded-[5px] bg-white shadow-xl'>
                 <div className='flex flex-row flex-nowrap gap-2'>
                     <span className='rounded-full background-blue-color-01'><CircleUser size={'1.5rem'} /></span>
-                    <p className='font-medium font-black-01'>Hello {'{{Usuário}}'}</p>
+                    <p className='font-medium font-black-01'>{user?.name} - {user?.role}</p>
                 </div>
                 <div>
                     <Button
                         label='Logout'
-                        icon={<LogOut size={'1rem'} />} />
+                        icon={<LogOut size={'1rem'} />}
+                        onClick={() => { clearUser(); navigate('/login'); }} />
                 </div>
             </header>
 
