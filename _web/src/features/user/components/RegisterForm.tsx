@@ -21,9 +21,9 @@ export default function RegisterForm() {
         const createUserResponse = await userService.create(dto);
 
         if (createUserResponse.success) {
-            // navigate('/task');
+            window.alert('Success!');
         } else {
-            console.error(createUserResponse.error.message);
+            window.alert(createUserResponse.error.message);
         }
 
         setLoading(false);

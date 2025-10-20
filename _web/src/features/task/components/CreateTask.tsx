@@ -15,14 +15,15 @@ export default function CreateTask() {
 
     const onSubmit = async (dto: CreateTaskDto) => {
         setLoading(true);
+
         const createdTask = await taskService.create(dto);
 
         if (createdTask.success) {
-            console.log(createdTask.data);
+            window.alert('Success!');
             reset();
 
         } else {
-            console.error(createdTask.error.message);
+            window.alert(createdTask.error.message);
         }
 
         setLoading(false);

@@ -26,4 +26,10 @@ export interface MasterTaskResponseDto {
     user: UserResponseDto;
 }
 
+export interface UpdateTaskDto {
+    title?: string;
+    description?: string;
+    status?: TaskStatus;
+}
+
 export type TaskStatus = 'andamento' | 'concluída' | 'pendente';

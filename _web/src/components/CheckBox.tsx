@@ -2,6 +2,7 @@ import {
     useState,
     type InputHTMLAttributes,
     type CSSProperties,
+    useEffect,
 } from 'react';
 import { Square, SquareCheckBig } from 'lucide-react';
 
@@ -19,7 +20,11 @@ export function Checkbox({ id, label, style, ...props }: InputProps) {
 
 
     return (
-        <label htmlFor={id} style={style} className='w-max max-w-full flex flex-col gap-1'>            
+        <label
+            htmlFor={id}
+            style={style}
+            className='w-max max-w-full flex flex-col gap-1'
+        >            
             <div
                 className='min-h-8 p-1 pl-2 pr-2 flex flex-nowrap items-center gap-2 border border-[#eeeeee] rounded-[5px] cursor-pointer overflow-hidden'
             >
@@ -51,7 +56,7 @@ export function Checkbox({ id, label, style, ...props }: InputProps) {
                     id={id}
                     type='checkbox'
                     className='hidden'
-                    onChange={(e) => setChecked(!e.target.checked)}
+                    onChange={(e) => setChecked(e.target.checked)}
                     {...props} />
             </div>
         </label>

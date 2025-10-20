@@ -23,7 +23,7 @@ export default function AuthForm() {
         if (login.success) {
             navigate('/task');
         } else {
-            console.error(login.error.message);
+            window.alert(login.error.message);
         }
 
         setLoading(false);
