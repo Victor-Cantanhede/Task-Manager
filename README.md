@@ -58,7 +58,7 @@ O backend é um serviço NestJS que utiliza **Prisma** como ORM, configurado par
     npm run dev
     ```
 
-    O servidor da API estará rodando em `http://localhost:3000` (ou a porta configurada no seu `.env`). Você pode verificar a documentação **Swagger UI** em um endpoint como `http://localhost:3000/api` (assumindo a configuração padrão do NestJS).
+    O servidor da API estará rodando em `http://localhost:5000` (ou a porta configurada no seu `.env`). Você pode verificar a documentação **Swagger UI** em um endpoint como `http://localhost:5000/swagger` (assumindo a configuração padrão do NestJS).
 
 ---
 
@@ -86,7 +86,7 @@ O frontend é uma aplicação React desenvolvida com **Vite**.
     npm run dev
     ```
 
-    O frontend estará acessível no endereço fornecido pelo Vite (tipicamente `http://localhost:5173` ou similar).
+    O frontend estará acessível no endereço fornecido pelo Vite (tipicamente `http://localhost:5173` ou `http://localhost:3000` ou similar).
 
 ---
 
@@ -94,7 +94,7 @@ O frontend é uma aplicação React desenvolvida com **Vite**.
 
 Com a API e o Frontend rodando:
 
-1.  Acesse a aplicação no seu navegador (por exemplo, `http://localhost:5173`).
+1.  Acesse a aplicação no seu navegador (por exemplo, `http://localhost:3000`).
 2.  Você provavelmente precisará **registrar** um novo usuário através do formulário de autenticação (`RegisterForm.tsx`).
 3.  Após o registro, **faça login** (`LoginPage.tsx`) para acessar a área de gerenciamento de tarefas (`TaskPage.tsx`).
 
