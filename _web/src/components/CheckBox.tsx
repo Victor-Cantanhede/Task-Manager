@@ -1,8 +1,7 @@
 import {
     useState,
     type InputHTMLAttributes,
-    type CSSProperties,
-    useEffect,
+    type CSSProperties
 } from 'react';
 import { Square, SquareCheckBig } from 'lucide-react';
 
