@@ -1,4 +1,4 @@
-# 🚀 Task Manager Project
+# 🚀 Task Manager Project !
 
 Este documento contém as instruções para instalar e rodar o projeto **Task Manager**, que é composto por um **backend API** em NestJS/Prisma e um **frontend web** em React/Vite.
 
